@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "Narwhal buildpack"
+exit 0

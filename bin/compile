@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+
+echo "Compiling Narwhal"
+
+#curl -s https://cli-assets.heroku.com/heroku-linux-x64.tar.gz | tar xz || exit $?
+#export PATH=$PATH:./heroku/bin/ || exit $?
+
+APP_NAME=$(cat "${ENV_DIR}/HEROKU_APP_NAME")
+HEROKU_API_KEY=$(cat "${ENV_DIR}/HEROKU_API_KEY")
+
+echo "APP_NAME ${APP_NAME}"
+
+if  [[ $APP_NAME ==  beluga-* ]] ;
+then
+#  heroku buildpacks:set heroku/ruby --app "${APP_NAME}"
+
+curl -n -X PUT https://api.heroku.com/apps/$APP_NAME/buildpack-installations \
+  -d '{
+  "updates": [
+    {
+      "buildpack": "https://github.com/lstoll/heroku-buildpack-monorepo"
+    },
+    {
+      "buildpack": "heroku/ruby"
+    },
+    {
+      "buildpack": "https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku-community/cli.tgz"
+    }
+  ]
+}' \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/vnd.heroku+json; version=3" \
+  -H "Authorization: Bearer $HEROKU_API_KEY"
+
+elif  [[ $APP_NAME == minke-* ]] ;
+then
+#  heroku buildpacks:set heroku/nodejs --app "${APP_NAME}"
+curl -n -X PUT https://api.heroku.com/apps/$APP_NAME/buildpack-installations \
+  -d '{
+  "updates": [
+    {
+      "buildpack": "https://github.com/lstoll/heroku-buildpack-monorepo.git"
+    },
+    {
+      "buildpack": "https://github.com/mars/create-react-app-buildpack"
+    }
+  ]
+}' \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/vnd.heroku+json; version=3" \
+  -H "Authorization: Bearer $HEROKU_API_KEY"
+else
+echo "Invalid app name"
+fi
+
