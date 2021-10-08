@@ -52,6 +52,10 @@ curl -n -X PUT https://api.heroku.com/apps/$APP_NAME/buildpack-installations \
   -H "Accept: application/vnd.heroku+json; version=3" \
   -H "Authorization: Bearer $HEROKU_API_KEY"
 
+curl -s https://cli-assets.heroku.com/heroku-linux-x64.tar.gz | tar xz || exit $?
+export PATH=$PATH:./heroku/bin/ || exit $?
+
+HEROKU_API_KEY=$(cat "${ENV_DIR}/HEROKU_API_KEY") heroku pg:copy beluga-dev::DATABASE_URL DATABASE_URL --app "${APP_NAME}" --confirm "${APP_NAME}"
 
 elif  [[ $APP_NAME == minke-* ]] ;
 then
