@@ -18,7 +18,7 @@ if  [[ $APP_NAME ==  beluga-* ]] ;
 then
 #  heroku buildpacks:set heroku/ruby --app "${APP_NAME}"
 
-$ curl -n -X POST https://api.heroku.com/apps/$APP_ID_OR_NAME/addons \
+curl -n -X POST https://api.heroku.com/apps/$APP_ID_OR_NAME/addons \
   -d '{
   "plan": "heroku-redis:hobby-dev"
 }' \
