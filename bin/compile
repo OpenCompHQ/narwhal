@@ -34,6 +34,25 @@ curl -n -X POST https://api.heroku.com/apps/$APP_NAME/addons \
   -H "Accept: application/vnd.heroku+json; version=3" \
   -H "Authorization: Bearer $HEROKU_API_KEY"
 
+curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/formation \
+  -d '{
+  "updates": [
+    {
+      "quantity": 1,
+      "size": "standard-1X",
+      "type": "web"
+    },
+    {
+      "quantity": 1,
+      "size": "standard-1X",
+      "type": "worker"
+    }
+  ]
+}' \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/vnd.heroku+json; version=3" \
+  -H "Authorization: Bearer $HEROKU_API_KEY"
+
 curl -n -X PUT https://api.heroku.com/apps/$APP_NAME/buildpack-installations \
   -d '{
   "updates": [
