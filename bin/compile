@@ -18,7 +18,7 @@ if  [[ $APP_NAME ==  beluga-* ]] ;
 then
 #  heroku buildpacks:set heroku/ruby --app "${APP_NAME}"
 
-FE_APP_NAME=$APP_NAME/beluga/minke
+FE_APP_NAME="${APP_NAME/beluga/minke}"
 FE_URL="https://${FE_APP_NAME}.herokuapp.com"
 curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
   -d '{
@@ -70,7 +70,7 @@ HEROKU_API_KEY=$(cat "${ENV_DIR}/HEROKU_API_KEY") heroku pg:copy beluga-dev::DAT
 elif  [[ $APP_NAME == minke-* ]] ;
 then
 
-BE_APP_NAME=$APP_NAME/minke/beluga
+BE_APP_NAME="${APP_NAME/minke/beluga}"
 BE_URL="https://${BE_APP_NAME}.herokuapp.com"
 curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
   -d '{
