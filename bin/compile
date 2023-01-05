@@ -90,8 +90,12 @@ curl -n -X PUT https://api.heroku.com/apps/$APP_NAME/buildpack-installations \
       "buildpack": "https://github.com/lstoll/heroku-buildpack-monorepo.git"
     },
     {
-      "buildpack": "https://github.com/mars/create-react-app-buildpack"
-    }
+      "buildpack": "https://github.com/heroku/heroku-buildpack-nodejs"
+    },
+    {
+      "buildpack": "https://buildpack-registry.s3.amazonaws.com/buildpacks/heroku-community/nginx.tgz
+    },
+
   ]
 }' \
   -H "Content-Type: application/json" \
