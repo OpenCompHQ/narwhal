@@ -30,10 +30,10 @@ curl -n -X POST https://api.heroku.com/apps/$APP_NAME/addons \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3" \
   -H "Authorization: Bearer $HEROKU_API_KEY"
-  
+
 curl -n -X POST https://api.heroku.com/apps/$APP_NAME/addons \
   -d '{
-  "plan": "rediscloud:30"
+  "plan": "rediscloud:100"
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3" \
