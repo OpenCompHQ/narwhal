@@ -104,7 +104,9 @@ WS_URL="${BE_URL}/cable"
 curl -n -X PATCH https://api.heroku.com/apps/$APP_NAME/config-vars \
   -d '{
   "REACT_APP_API_URL": "'$BE_URL'",
-  "REACT_APP_WS_URL": "'$WS_URL'"
+  "REACT_APP_WS_URL": "'$WS_URL'",
+  "VITE_API_URL": "'$BE_URL'",
+  "VITE_WS_URL": "'$WS_URL'"
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3" \
