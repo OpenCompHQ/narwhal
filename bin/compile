@@ -58,7 +58,9 @@ curl -n -X PUT https://api.heroku.com/apps/$APP_NAME/buildpack-installations \
   -H "Authorization: Bearer $HEROKU_API_KEY"
 
 # Taken from https://github.com/heroku/heroku-buildpack-awscli/blob/master/bin/compile
-AWS_CLI_URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+# Pin to version 2.13.33 https://github.com/aws/aws-cli/issues/8320
+# AWS_CLI_URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+AWS_CLI_URL="https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.13.33.zip"
 INSTALL_DIR="/app/.awscli"
 TMP_DIR=$(mktemp -d)
 
