@@ -82,18 +82,21 @@ rm -rf "${TMP_DIR}"
 echo "-----> Successfully installed AWS CLI"
 
 # Install heroku cli (needed for db restore)
-curl -s https://cli-assets.heroku.com/heroku-linux-x64.tar.gz | tar xz || exit $?
-export PATH=$PATH:./heroku/bin/ || exit $?
+# curl -s https://cli-assets.heroku.com/heroku-linux-x64.tar.gz | tar xz || exit $?
+# export PATH=$PATH:./heroku/bin/ || exit $?
 
 # Create signed url
-signed_url="$(
-export AWS_ACCESS_KEY_ID=$(cat "${ENV_DIR}/AWS_NARWHAL_ACCESS_KEY_ID")
-export AWS_SECRET_ACCESS_KEY=$(cat "${ENV_DIR}/AWS_NARWHAL_SECRET_ACCESS_KEY")
-/app/.awscli/bin/aws s3 presign s3://opencomp-seed-data/seed.dump --region=us-east-2
-)"
+# signed_url="$(
+# export AWS_ACCESS_KEY_ID=$(cat "${ENV_DIR}/AWS_NARWHAL_ACCESS_KEY_ID")
+# export AWS_SECRET_ACCESS_KEY=$(cat "${ENV_DIR}/AWS_NARWHAL_SECRET_ACCESS_KEY")
+# /app/.awscli/bin/aws s3 presign s3://opencomp-seed-data/seed.dump --region=us-east-2
+# )"
 
 # Restore database from seed
-HEROKU_API_KEY=$(cat "${ENV_DIR}/HEROKU_API_KEY") heroku pg:backups:restore "${signed_url}" DATABASE_URL --app "${APP_NAME}" --confirm "${APP_NAME}"
+#HEROKU_API_KEY=$(cat "${ENV_DIR}/HEROKU_API_KEY") heroku pg:backups:restore "${signed_url}" DATABASE_URL --app "${APP_NAME}" --confirm "${APP_NAME}"
+export AWS_ACCESS_KEY_ID=$(cat "${ENV_DIR}/AWS_NARWHAL_ACCESS_KEY_ID")
+export AWS_SECRET_ACCESS_KEY=$(cat "${ENV_DIR}/AWS_NARWHAL_SECRET_ACCESS_KEY")
+${BUILD_DIR}/apps/beluga/scripts/restore_db_from_seed.sh $(cat "${ENV_DIR}/DATABASE_URL")
 
 elif  [[ $APP_NAME == minke-* ]] ;
 then
