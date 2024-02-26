@@ -33,7 +33,7 @@ curl -n -X POST https://api.heroku.com/apps/$APP_NAME/addons \
 
 curl -n -X POST https://api.heroku.com/apps/$APP_NAME/addons \
   -d '{
-  "plan": "rediscloud:250"
+  "plan": "rediscloud:30"
 }' \
   -H "Content-Type: application/json" \
   -H "Accept: application/vnd.heroku+json; version=3" \
